@@ -1,0 +1,8 @@
+[ INFO/2023-12-27 22:59:38,470] sqlalchemy.engine.Engine: BEGIN (implicit)
+[ INFO/2023-12-27 22:59:38,476] sqlalchemy.engine.Engine: SELECT "user".user_id, "user".first_name, "user".last_name, "user".username, "user".status, "user".created_at, "user".updated_at, "user".id 
+FROM "user" 
+WHERE "user".user_id = %(user_id_1)s::BIGINT
+[ INFO/2023-12-27 22:59:38,476] sqlalchemy.engine.Engine: [generated in 0.00016s] {'user_id_1': 6482735729}
+[ INFO/2023-12-27 22:59:38,660] sqlalchemy.engine.Engine: INSERT INTO "user" (user_id, first_name, last_name, username, status, updated_at) VALUES (%(user_id)s::BIGINT, %(first_name)s::VARCHAR, %(last_name)s::VARCHAR, %(username)s::VARCHAR, %(status)s, %(updated_at)s::TIMESTAMP WITHOUT TIME ZONE) RETURNING "user".created_at, "user".id
+[ INFO/2023-12-27 22:59:38,660] sqlalchemy.engine.Engine: [generated in 0.00047s] {'user_id': 6482735729, 'first_name': 'Сергей', 'last_name': None, 'username': None, 'status': 'active', 'updated_at': None}
+[ INFO/2023-12-27 22:59:38,759] sqlalchemy.engine.Engine: COMMIT

@@ -1,0 +1,8 @@
+.env
+venv/
+data/log.log
+**/__pycache__
+data/audio/temp.mp3
+data/audio/temp.jpg
+data/get_url.log
+__cache__

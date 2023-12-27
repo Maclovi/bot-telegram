@@ -1,0 +1,9 @@
+.git
+.gitignore
+**/__pycache__
+__cache__
+venv/
+.env.example
+poetry.lock
+pyproject.toml
+test.py
