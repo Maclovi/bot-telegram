@@ -7,9 +7,7 @@ from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column,
 
 from ..data.settings import secrets
 
-# sc = "://ticezjoe:xnaavMCeLSTzIt-HDEXVGw49facNhauK@floppy.db.elephantsql.com/ticezjoe"
 engine = create_engine(url=f'postgresql+psycopg{secrets.URL_POSTGRES}')
-# engine = create_engine(url=f'postgresql+psycopg{sc}')
 Session = sessionmaker(engine)
 
 intpk = Annotated[int, mapped_column(primary_key=True)]
