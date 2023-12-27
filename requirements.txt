@@ -6,7 +6,6 @@ aiosignal==1.3.1
 alembic==1.13.1
 annotated-types==0.6.0
 attrs==23.1.0
--e git+ssh://git@github.com/Maclovi/telegram-bot-music.git@51a79680cedb408c219dec9791bc24f88dccbeb9#egg=asyncbot
 certifi==2023.11.17
 frozenlist==1.4.1
 greenlet==3.0.3
