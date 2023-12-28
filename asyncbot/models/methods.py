@@ -37,7 +37,7 @@ class SyncCore:
             file.users.append(user)
 
     @classmethod
-    def get_file(cls, url: str, user_id: int) -> FileOrm | None:
+    def get_file(cls, url: str, user_id: int) -> tuple[str, str] | None:
         engine.echo = False
         video_id: str = services.video_id(url)
         with Session() as session:
@@ -47,7 +47,7 @@ class SyncCore:
             if file:
                 cls.add_user_file(session, file, user_id)
                 session.commit()
-                return file
+                return file.file_id, file.caption
 
     @classmethod
     async def add_file(cls, data: dict[str, Any]) -> None:

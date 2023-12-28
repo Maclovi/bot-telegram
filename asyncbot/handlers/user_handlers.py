@@ -80,10 +80,10 @@ async def send_youtube_music(message: Message) -> None:
     assert message.text is not None
 
     bot_answer: Message = await message.answer("<em><b>Проверяю..</b></em>")
-    file = SyncCore.get_file(message.text, message.from_user.id)
-    if file:
-        await message.answer_audio(file.file_id,
-                                   caption=file.caption + secrets.BOT_USERNAME)
+    file_data = SyncCore.get_file(message.text, message.from_user.id)
+    if file_data:
+        await message.answer_audio(file_data[0],
+                                   caption=file_data[1] + secrets.BOT_USERNAME)
         await utils.sleep_and_delete(message, bot_answer)
         return
 
