@@ -11,13 +11,13 @@ IsNewUser = bool
 
 class SyncCore:
     @classmethod
-    def add_person(cls, userdata: UserValidate) -> IsNewUser:
+    def add_person(cls, data: UserValidate) -> IsNewUser:
         engine.echo = False
         with Session() as session:
-            query = select(UserOrm).filter_by(user_id=userdata.user_id)
+            query = select(UserOrm).filter_by(user_id=data.user_id)
             user = session.scalars(query).one_or_none()
             if user is None:
-                user = UserOrm(**userdata.model_dump())
+                user = UserOrm(**data.model_dump())
                 session.add(user)
                 session.commit()
                 return IsNewUser(True)
@@ -37,7 +37,7 @@ class SyncCore:
             file.users.append(user)
 
     @classmethod
-    def get_file(cls, url: str, user_id: int) -> str | None:
+    def get_file(cls, url: str, user_id: int) -> FileOrm | None:
         engine.echo = False
         video_id: str = services.video_id(url)
         with Session() as session:
@@ -47,7 +47,7 @@ class SyncCore:
             if file:
                 cls.add_user_file(session, file, user_id)
                 session.commit()
-                return file.file_id
+                return file
 
     @classmethod
     async def add_file(cls, data: dict[str, Any]) -> None:
@@ -55,8 +55,22 @@ class SyncCore:
         video_id: str = data["video_id"]
         file_id: str = data["file_id"]
         user_id: int = data["user_id"]
+        caption: str = data["caption"]
         with Session() as session:
-            file = FileOrm(video_id=video_id, file_id=file_id)
+            file = FileOrm(video_id=video_id, file_id=file_id, caption=caption)
             session.add(file)
             cls.add_user_file(session, file, user_id)
+            session.commit()
+
+    @classmethod
+    def update_person(cls, data: UserValidate) -> None:
+        engine.echo = False
+        with Session() as session:
+            query = select(UserOrm).filter_by(user_id=data.user_id)
+            user = session.scalars(query).one()
+            user.first_name = data.first_name
+            user.last_name = data.last_name
+            user.username = data.username
+            user.status = data.status
+            session.add(user)
             session.commit()

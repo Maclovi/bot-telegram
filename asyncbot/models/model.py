@@ -13,6 +13,7 @@ Session = sessionmaker(engine)
 intpk = Annotated[int, mapped_column(primary_key=True)]
 big_int_unique = Annotated[int, mapped_column(BigInteger, unique=True)]
 str_50 = Annotated[str, mapped_column(String(50))]
+str_1000 = Annotated[str, mapped_column(String(1000))]
 str_50_unique = Annotated[str, mapped_column(String(50), unique=True)]
 datetime_default = Annotated[
     datetime,
@@ -60,6 +61,7 @@ class FileOrm(Base):
     file_id: Mapped[str_50]
     created_at: Mapped[datetime_default]
     updated_at: Mapped[Optional[datetime_update]]
+    caption: Mapped[str_1000]
 
     users: Mapped[list["UserOrm"]] = relationship(
         back_populates="files", secondary="user_file"

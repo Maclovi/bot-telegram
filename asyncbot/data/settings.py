@@ -1,14 +1,26 @@
+import os
 from typing import Any, Literal
+from dotenv import load_dotenv
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import BaseModel
 
 
-class UserValidate(BaseSettings):
+class UserValidate(BaseModel):
     user_id: int
     first_name: str | None
     last_name: str | None
     username: str | None
     status: Literal['active', 'inactive']
+
+
+class BaseSettings:
+    def __init__(self, *, env: str | None = None) -> None:
+        load_dotenv(env)
+
+    def _converts_of_env(self):
+        for k, v in os.environ.items():
+            if k in self.__annotations__:
+                setattr(self, k, self.__annotations__[k](v))
 
 
 class Settings(BaseSettings):
@@ -17,13 +29,9 @@ class Settings(BaseSettings):
     BOT_ID: int
     BOT_USERNAME: str
     ME_ID: int
-    ADMIN_IDS: list[int]
+    ADMIN_IDS: str
     USER_GROUP_ID: int
     MUSIC_BACKUP_ID: int
-
-    # user client
-    API_ID: int
-    API_HASH: str
 
     # Data Base
     URL_POSTGRES: str
@@ -32,10 +40,9 @@ class Settings(BaseSettings):
     HOST_ASYNCLIENT: str
     WEB_HOST: str
     WEBHOOK_SECRET: str
-    model_config = SettingsConfigDict(env_file='.env')
 
 
-secrets = Settings()    # type: ignore
+secrets = Settings(env='.env')
 
 
 def load_settings_logging() -> dict[str, Any]:

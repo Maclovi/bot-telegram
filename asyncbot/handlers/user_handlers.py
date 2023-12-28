@@ -6,12 +6,12 @@ from aiogram.types import Message
 
 from utils import utils
 
-from ..data.settings import UserValidate
+from ..data.settings import UserValidate, secrets
 from ..exservies import request
 from ..keyboards import set_menu
 from ..lexicon.lexicon import LEXICON_RU
 from ..models.methods import SyncCore
-from ..services.services import get_random_response, video_id
+from ..services.services import get_random_response
 
 # register logger
 logger = logging.getLogger(__name__)
@@ -80,9 +80,10 @@ async def send_youtube_music(message: Message) -> None:
     assert message.text is not None
 
     bot_answer: Message = await message.answer("<em><b>Проверяю..</b></em>")
-    file_id: str | None = SyncCore.get_file(message.text, message.from_user.id)
-    if file_id:
-        await message.answer_audio(file_id)
+    file = SyncCore.get_file(message.text, message.from_user.id)
+    if file:
+        await message.answer_audio(file.file_id,
+                                   caption=file.caption + secrets.BOT_USERNAME)
         await utils.sleep_and_delete(message, bot_answer)
         return
 
