@@ -1,7 +1,7 @@
 import os
 from typing import Any, Literal
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 from pydantic import BaseModel
 
 

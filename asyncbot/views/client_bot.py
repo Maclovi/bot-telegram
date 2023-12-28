@@ -6,8 +6,8 @@ from aiojobs.aiohttp import spawn
 from asyncbot.bot import bot
 from utils import utils
 
-from ..models.methods import SyncCore
 from ..data.settings import secrets
+from ..models.methods import SyncCore
 
 routes = web.RouteTableDef()
 

@@ -2,8 +2,8 @@ from aiogram import F, Router
 from aiogram.filters import KICKED, MEMBER, ChatMemberUpdatedFilter
 from aiogram.types import ChatMemberUpdated, Message
 
-from ..models.methods import SyncCore
 from ..data.settings import UserValidate
+from ..models.methods import SyncCore
 
 # init router a level of module
 router = Router()
